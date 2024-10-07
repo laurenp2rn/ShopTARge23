@@ -7,56 +7,56 @@ using ShopTARge23.Data;
 
 namespace ShopTARge23.ApplicationServices.Services
 {
-    public class SpaceshipsServices : ISpaceshipsServices
-    {
-        private readonly ShopTARge23Context _context;
+	public class SpaceshipsServices : ISpaceshipsServices
+	{
+		private readonly ShopTARge23Context _context;
 
-        public SpaceshipsServices
-            (
-                ShopTARge23Context context
-            )
-        {
-            _context = context;
-        }
+		public SpaceshipsServices
+			(
+				ShopTARge23Context context
+			)
+		{
+			_context = context;
+		}
 
-        public async Task<Spaceship> DetailAsync(Guid id)
-        {
-            var result = await _context.Spaceships
-                .FirstOrDefaultAsync( x => x.Id == id );
+		public async Task<Spaceship> DetailAsync(Guid id)
+		{
+			var result = await _context.Spaceships
+				.FirstOrDefaultAsync(x => x.Id == id);
 
-            return result;
-        }
+			return result;
+		}
 
-        public async Task<Spaceship> Update(SpaceshipDto dto)
-        {
-            Spaceship domain = new();
+		public async Task<Spaceship> Update(SpaceshipDto dto)
+		{
+			Spaceship domain = new();
 
-            domain.Id = dto.Id;
-            domain.Name = dto.Name;
-            domain.Typename = dto.Typename;
-            domain.SpaceshipModel = dto.SpaceshipModel;
-            domain.BuiltDate = dto.BuiltDate;
-            domain.Crew = dto.Crew;
-            domain.EnginePower = dto.EnginePower;
-            domain.CreatedAt = dto.CreatedAt;
-            domain.ModifiedAt = DateTime.Now;
+			domain.Id = dto.Id;
+			domain.Name = dto.Name;
+			domain.Typename = dto.Typename;
+			domain.SpaceshipModel = dto.SpaceshipModel;
+			domain.BuiltDate = dto.BuiltDate;
+			domain.Crew = dto.Crew;
+			domain.EnginePower = dto.EnginePower;
+			domain.CreatedAt = dto.CreatedAt;
+			domain.ModifiedAt = DateTime.Now;
 
-            _context.Spaceships.Update(domain);
-            await _context.SaveChangesAsync();
+			_context.Spaceships.Update(domain);
+			await _context.SaveChangesAsync();
 
-            return domain;
-        }
+			return domain;
+		}
 
-        public async Task<Spaceship> Delete(Guid id)
-        {
-            var spaceship = await _context.Spaceships
-                .FirstOrDefaultAsync(x => x.Id == id);
+		public async Task<Spaceship> Delete(Guid id)
+		{
+			var spaceship = await _context.Spaceships
+				.FirstOrDefaultAsync(x => x.Id == id);
 
-            _context.Spaceships.Remove(spaceship);
-            await _context.SaveChangesAsync();
+			_context.Spaceships.Remove(spaceship);
+			await _context.SaveChangesAsync();
 
-            return spaceship;
-        }
+			return spaceship;
+		}
 
-    }
+	}
 }
