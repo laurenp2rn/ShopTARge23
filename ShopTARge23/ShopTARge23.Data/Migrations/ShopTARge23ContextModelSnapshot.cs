@@ -40,36 +40,35 @@ namespace ShopTARge23.Data.Migrations
                     b.ToTable("FileToApis");
                 });
 
-            modelBuilder.Entity("ShopTARge23.Core.Domain.Kindergarten", b =>
+            modelBuilder.Entity("ShopTARge23.Core.Domain.RealEstate", b =>
                 {
                     b.Property<Guid?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("ChildrenCount")
-                        .HasColumnType("int");
+                    b.Property<string>("BuildingType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("GroupName")
+                    b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("KindergartenName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Teacher")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("RoomNumber")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Size")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Kindergartens");
+                    b.ToTable("RealEstates");
                 });
 
             modelBuilder.Entity("ShopTARge23.Core.Domain.Spaceship", b =>

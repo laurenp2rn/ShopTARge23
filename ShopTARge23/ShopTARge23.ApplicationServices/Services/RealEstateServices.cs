@@ -1,5 +1,4 @@
-﻿using System.Xml;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ShopTARge23.Core.Domain;
 using ShopTARge23.Core.Dto;
 using ShopTARge23.Core.ServiceInterface;
@@ -42,6 +41,35 @@ namespace ShopTARge23.ApplicationServices.Services
         {
             var result = await _context.RealEstates
                 .FirstOrDefaultAsync(x => x.Id == id);
+
+            return result;
+        }
+
+        public async Task<RealEstate> Update(RealEstateDto dto)
+        {
+            RealEstate domain = new();
+
+            domain.Id = dto.Id;
+            domain.Size = dto.Size;
+            domain.Location = dto.Location;
+            domain.BuildingType = dto.BuildingType;
+            domain.RoomNumber = dto.RoomNumber;
+            domain.CreatedAt = dto.CreatedAt;
+            domain.ModifiedAt = DateTime.Now;
+
+            _context.RealEstates.Update(domain);
+            await _context.SaveChangesAsync();
+
+            return domain;
+        }
+
+        public async Task<RealEstate> Delete(Guid id)
+        {
+            var result = await _context.RealEstates
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            _context.RealEstates.Remove(result);
+            await _context.SaveChangesAsync();
 
             return result;
         }
