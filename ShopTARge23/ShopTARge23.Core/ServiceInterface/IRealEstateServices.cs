@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShopTARge23.Core.Dto
+namespace ShopTARge23.Core.ServiceInterface
 {
-    internal class RealEstateDto
+    internal class IRealEstateServices
     {
     }
 }
