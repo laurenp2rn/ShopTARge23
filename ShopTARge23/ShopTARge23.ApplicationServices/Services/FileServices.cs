@@ -77,7 +77,7 @@ namespace ShopTARge23.ApplicationServices.Services
 
         public async Task<List<FileToApi>> RemoveImagesFromApi(FileToApiDto[] dtos)
         {
-            foreach (var dto in dtos)
+            foreach(var dto in dtos)
             {
                 var imageId = await _context.FileToApis
                     .FirstOrDefaultAsync(x => x.ExistingFilePath == dto.ExistingFilePath);
@@ -136,7 +136,7 @@ namespace ShopTARge23.ApplicationServices.Services
 
         public async Task<FileToDatabase> RemoveImagesFromDatabase(FileToDatabaseDto[] dtos)
         {
-            foreach (var dto in dtos)
+            foreach(var dto in dtos)
             {
                 var image = await _context.FileToDatabases
                     .Where(x => x.Id == dto.Id)

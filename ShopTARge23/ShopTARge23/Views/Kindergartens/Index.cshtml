@@ -4,7 +4,7 @@
 }
 
 <div>
-    <a asp-action="create" asp-controller="Kindergartens" type="submit" class="btn btn-primary">Create</a>
+    <a asp-action="Create" asp-controller="Kindergartens" class="btn btn-primary">Create</a>
 </div>
 <div class="h1">
     Kindergartens
@@ -22,18 +22,18 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var kindergartens in Model)
+            @foreach (var kindergarten in Model)
             {
                 <tr>
                     <td>@rowNumber</td>
-                    <td>@kindergartens.GroupName</td>
-                    <td>@kindergartens.ChildrenCount</td>
-                    <td>@kindergartens.KindergartenName</td>
-                    <td>@kindergartens.Teacher</td>
+                    <td>@kindergarten.GroupName</td>
+                    <td>@kindergarten.ChildrenCount</td>
+                    <td>@kindergarten.KindergartenName</td>
+                    <td>@kindergarten.Teacher</td>
                     <td>
-                        <a asp-action="details" asp-controller="kindergartens" asp-route-id="@kindergartens.Id" class="btn btn-info">Details</a>
-                        <a asp-action="update" asp-controller="kindergartens" asp-route-id="@kindergartens.Id" class="btn btn-primary">Update</a>
-                        <a asp-action="delete" asp-controller="kindergartens" asp-route-id="@kindergartens.Id" class="btn btn-outline-danger">Delete</a>
+                        <a asp-action="Details" asp-controller="Kindergartens" asp-route-id="@kindergarten.Id" class="btn btn-info">Details</a>
+                        <a asp-action="Update" asp-controller="Kindergartens" asp-route-id="@kindergarten.Id" class="btn btn-primary">Update</a>
+                        <a asp-action="Delete" asp-controller="Kindergartens" asp-route-id="@kindergarten.Id" class="btn btn-outline-danger">Delete</a>
                     </td>
                 </tr>
                 rowNumber += 1;

@@ -3,14 +3,16 @@ using ShopTARge23.Core.Domain;
 using ShopTARge23.Core.Dto;
 using ShopTARge23.Core.ServiceInterface;
 using ShopTARge23.Data;
+using ShopTARge23.Core.Dto;
+using ShopTARge23.Core.ServiceInterface;
 
 namespace ShopTARge23.ApplicationServices.Services
 {
-    public class KindergartenServices : IKindergartensServices
+    public class KindergartensServices : IKindergartensServices
     {
         private readonly ShopTARge23Context _context;
 
-        public KindergartenServices
+        public KindergartensServices
             (
                 ShopTARge23Context context
             )

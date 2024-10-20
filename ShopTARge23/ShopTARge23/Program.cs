@@ -18,7 +18,7 @@ namespace ShopTARge23
             builder.Services.AddScoped<ISpaceshipsServices, SpaceshipsServices>();
             builder.Services.AddScoped<IFileServices, FileServices>();
             builder.Services.AddScoped<IRealEstateServices, RealEstateServices>();
-            builder.Services.AddScoped<IKindergartensServices, KindergartenServices>();
+            builder.Services.AddScoped<IKindergartensServices, KindergartensServices>();
 
             builder.Services.AddDbContext<ShopTARge23Context>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -46,9 +46,16 @@ namespace ShopTARge23
 
             app.UseAuthorization();
 
+            // Default controller route
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            // Kindergarten route
+            app.MapControllerRoute(
+                name: "kindergarten",
+                pattern: "Kindergarten/{action=Index}/{id?}",
+                defaults: new { controller = "Kindergarten" });
 
             app.Run();
         }
