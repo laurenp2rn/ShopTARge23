@@ -3,8 +3,6 @@ using Microsoft.Extensions.FileProviders;
 using ShopTARge23.ApplicationServices.Services;
 using ShopTARge23.Core.ServiceInterface;
 using ShopTARge23.Data;
-using ShopTARge23.ApplicationServices.Services;
-using ShopTARge23.Core.ServiceInterface;
 
 namespace ShopTARge23
 {
@@ -18,9 +16,9 @@ namespace ShopTARge23
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddScoped<ISpaceshipsServices, SpaceshipsServices>();
-            builder.Services.AddScoped<IKindergartensServices, KindergartenServices>();
             builder.Services.AddScoped<IFileServices, FileServices>();
             builder.Services.AddScoped<IRealEstateServices, RealEstateServices>();
+            builder.Services.AddScoped<IKindergartensServices, KindergartenServices>();
 
             builder.Services.AddDbContext<ShopTARge23Context>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -31,7 +29,6 @@ namespace ShopTARge23
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
