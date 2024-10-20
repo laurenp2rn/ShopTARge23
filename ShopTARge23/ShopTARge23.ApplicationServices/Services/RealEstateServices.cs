@@ -10,13 +10,16 @@ namespace ShopTARge23.ApplicationServices.Services
     public class RealEstateServices : IRealEstateServices
     {
         private readonly ShopTARge23Context _context;
+        private readonly IFileServices _fileServices;
 
         public RealEstateServices
             (
-                ShopTARge23Context context
+                ShopTARge23Context context,
+                IFileServices fileServices
             )
         {
             _context = context;
+            _fileServices = fileServices;
         }
 
         public async Task<RealEstate> Create(RealEstateDto dto)
@@ -30,6 +33,11 @@ namespace ShopTARge23.ApplicationServices.Services
             realEstate.BuildingType = dto.BuildingType;
             realEstate.CreatedAt = DateTime.Now;
             realEstate.ModifiedAt = DateTime.Now;
+
+            if (dto.Files != null)
+            {
+                _fileServices.UploadFilesToDatabase(dto, realEstate);
+            }
 
             await _context.RealEstates.AddAsync(realEstate);
             await _context.SaveChangesAsync();
@@ -57,6 +65,11 @@ namespace ShopTARge23.ApplicationServices.Services
             domain.CreatedAt = dto.CreatedAt;
             domain.ModifiedAt = DateTime.Now;
 
+            if (dto.Files != null)
+            {
+                _fileServices.UploadFilesToDatabase(dto, domain);
+            }
+
             _context.RealEstates.Update(domain);
             await _context.SaveChangesAsync();
 
@@ -68,6 +81,16 @@ namespace ShopTARge23.ApplicationServices.Services
             var result = await _context.RealEstates
                 .FirstOrDefaultAsync(x => x.Id == id);
 
+            var images = await _context.FileToDatabases
+                .Where(x => x.RealEstateId == id)
+                .Select(y => new FileToDatabaseDto
+                {
+                    Id = y.Id,
+                    ImageTitle = y.ImageTitle,
+                    RealEstateId = y.RealEstateId
+                }).ToArrayAsync();
+
+            await _fileServices.RemoveImagesFromDatabase(images);
             _context.RealEstates.Remove(result);
             await _context.SaveChangesAsync();
 
