@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ShopTARge23.Core.Domain
 {
@@ -13,6 +10,9 @@ namespace ShopTARge23.Core.Domain
         public int ChildrenCount { get; set; }
         public string KindergartenName { get; set; }
         public string Teacher { get; set; }
+
+        public ICollection<FileToDatabase> Images { get; set; } = new List<FileToDatabase>();
+
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }

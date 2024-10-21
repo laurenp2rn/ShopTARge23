@@ -12,8 +12,8 @@ using ShopTARge23.Data;
 namespace ShopTARge23.Data.Migrations
 {
     [DbContext(typeof(ShopTARge23Context))]
-    [Migration("20241008114309_FileToDatabase")]
-    partial class FileToDatabase
+    [Migration("20241002122343_Kindergarten")]
+    partial class Kindergarten
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,62 +43,41 @@ namespace ShopTARge23.Data.Migrations
                     b.ToTable("FileToApis");
                 });
 
-            modelBuilder.Entity("ShopTARge23.Core.Domain.FileToDatabase", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<byte[]>("ImageData")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<string>("ImageTitle")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("RealEstateId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("FileToDatabases");
-                });
-
-            modelBuilder.Entity("ShopTARge23.Core.Domain.RealEstate", b =>
+            modelBuilder.Entity("ShopTARge23.Core.Domain.Kindergarten", b =>
                 {
                     b.Property<Guid?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("BuildingType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ChildrenCount")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Location")
+                    b.Property<string>("GroupName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<string>("KindergartenName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Teacher")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("RoomNumber")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Size")
-                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
-                    b.ToTable("RealEstates");
+                    b.ToTable("Kindergartens");
                 });
 
             modelBuilder.Entity("ShopTARge23.Core.Domain.Spaceship", b =>
                 {
-                    b.Property<Guid?>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
