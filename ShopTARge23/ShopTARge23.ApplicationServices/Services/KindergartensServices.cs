@@ -4,92 +4,97 @@ using ShopTARge23.Core.Dto;
 using ShopTARge23.Core.ServiceInterface;
 using ShopTARge23.Data;
 
+
 namespace ShopTARge23.ApplicationServices.Services
 {
-    public class KindergartensServices : IKindergartensServices
+    public class KindergartenServices : IKindergartenServices
     {
         private readonly ShopTARge23Context _context;
+        private readonly IFileServices _fileServices;
 
-        public KindergartensServices(ShopTARge23Context context)
+        public KindergartenServices
+            (
+                ShopTARge23Context context,
+                IFileServices fileServices
+            )
         {
             _context = context;
+            _fileServices = fileServices;
         }
 
-        public async Task<KindergartenDto> Create(KindergartenDto dto)
+        public async Task<Kindergarten> Create(KindergartenDto dto)
         {
-            Kindergarten kindergarten = new Kindergarten
-            {
-                Id = Guid.NewGuid(),
-                GroupName = dto.GroupName,
-                ChildrenCount = dto.ChildrenCount,
-                KindergartenName = dto.KindergartenName,
-                Teacher = dto.Teacher,
-                CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now
-            };
+            Kindergarten kindergarten = new();
 
-            await _context.Kindergartens.AddAsync(kindergarten);
-            await _context.SaveChangesAsync();
-
-            return MapToDto(kindergarten);
-        }
-
-        public async Task<KindergartenDto> DetailsAsync(Guid id)  // Parandatud
-        {
-            var kindergarten = await _context.Kindergartens
-                .FirstOrDefaultAsync(x => x.Id == id);
-            return MapToDto(kindergarten);
-        }
-
-        public async Task<KindergartenDto> Update(KindergartenDto dto)
-        {
-            var kindergarten = await _context.Kindergartens.FindAsync(dto.Id);
-            if (kindergarten == null) return null;
-
+            kindergarten.Id = Guid.NewGuid();
             kindergarten.GroupName = dto.GroupName;
             kindergarten.ChildrenCount = dto.ChildrenCount;
             kindergarten.KindergartenName = dto.KindergartenName;
             kindergarten.Teacher = dto.Teacher;
+            kindergarten.CreatedAt = DateTime.Now;
             kindergarten.UpdatedAt = DateTime.Now;
 
-            _context.Kindergartens.Update(kindergarten);
-            await _context.SaveChangesAsync();
-
-            return MapToDto(kindergarten);
-        }
-
-        public async Task<KindergartenDto> Delete(Guid id)
-        {
-            var kindergarten = await _context.Kindergartens.FindAsync(id);
-            if (kindergarten == null) return null;
-
-            _context.Kindergartens.Remove(kindergarten);
-            await _context.SaveChangesAsync();
-
-            return MapToDto(kindergarten);
-        }
-
-        public async Task DeleteImage(Guid imageId)  // Täidetud meetod
-        {
-            var image = await _context.FileToDatabases.FindAsync(imageId);
-            if (image == null) return;
-
-            _context.FileToDatabases.Remove(image);
-            await _context.SaveChangesAsync();
-        }
-
-        private KindergartenDto MapToDto(Kindergarten kindergarten)
-        {
-            return new KindergartenDto
+            if (dto.Files != null)
             {
-                Id = kindergarten.Id,
-                GroupName = kindergarten.GroupName,
-                ChildrenCount = kindergarten.ChildrenCount,
-                KindergartenName = kindergarten.KindergartenName,
-                Teacher = kindergarten.Teacher,
-                CreatedAt = kindergarten.CreatedAt,
-                UpdatedAt = kindergarten.UpdatedAt
-            };
+                _fileServices.UploadFilesToDatabase(dto, kindergarten);
+            }
+
+            await _context.Kindergartens.AddAsync(kindergarten);
+            await _context.SaveChangesAsync();
+
+            return kindergarten;
+        }
+
+        public async Task<Kindergarten> GetAsync(Guid id)
+        {
+            var result = await _context.Kindergartens
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            return result;
+        }
+
+        public async Task<Kindergarten> Update(KindergartenDto dto)
+        {
+            Kindergarten domain = new();
+
+            domain.Id = dto.Id;
+            domain.GroupName = dto.GroupName;
+            domain.ChildrenCount = dto.ChildrenCount;
+            domain.KindergartenName = dto.KindergartenName;
+            domain.Teacher = dto.Teacher;
+            domain.CreatedAt = dto.CreatedAt;
+            domain.UpdatedAt = DateTime.Now;
+
+            if (dto.Files != null)
+            {
+                _fileServices.UploadFilesToDatabase(dto, domain);
+            }
+
+            _context.Kindergartens.Update(domain);
+            await _context.SaveChangesAsync();
+
+            return domain;
+        }
+
+        public async Task<Kindergarten> Delete(Guid id)
+        {
+            var result = await _context.Kindergartens
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            var images = await _context.FileToDatabases
+                .Where(x => x.KindergartenId == id)
+                .Select(y => new FileToDatabaseDto
+                {
+                    Id = y.Id,
+                    ImageTitle = y.ImageTitle,
+                    KindergartenId = y.KindergartenId
+                }).ToArrayAsync();
+
+            await _fileServices.RemoveImagesFromDatabase(images);
+            _context.Kindergartens.Remove(result);
+            await _context.SaveChangesAsync();
+
+            return result;
         }
     }
 }

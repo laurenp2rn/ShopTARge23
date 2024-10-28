@@ -1,19 +1,17 @@
-﻿@model ShopTARge23.Models.Kindergartens.KindergartenCreateUpdateViewModel;
+﻿@model ShopTARge23.Models.Kindergartens.KindergartensCreateUpdateViewModel
+
 
 @if (Model.Id.HasValue)
 
 {
     <h1>Update</h1>
-    <h4>Kindergarten</h4>
 }
 
 else
 
 {
     <h1>Create</h1>
-    <h4>Kindergarten</h4>
 }
-<hr />
 
 <div>
     <form method="post" enctype="multipart/form-data">
@@ -54,38 +52,33 @@ else
             <div class="col-sm-5">
                 <div class="custom-file">
                     <input class="form-control custom-file-input" asp-for="Files" multiple type="file" />
-                    <label class="custom-file-label">Choose file...</label>
                 </div>
             </div>
         </div>
 
-        <hr />
-
         <div>
-            @foreach (var image in Model.Image)
+            @foreach (var images in Model.Image)
             {
-                <partial name="_Images" model="image" />
-                <button type="submit" formaction="@Url.Action("RemoveImage", "Kindergartens", new { imageId = image.ImageId })"
-                        class="btn btn-danger">
-                    Remove Image
-                </button>
+                <partial name="_Images" model="images" />
+                <input asp-action="removeImage" asp-controller="kindergartens" asp-route-imageId="@images.ImageId" type="submit" class="btn btn-danger" value="Remove Image" />
             }
         </div>
+
 
         <hr />
 
         @if (Model.Id.HasValue)
 
         {
-            <button type="submit" formaction="@Url.Action("Update", "Kindergartens")" class="btn btn-primary">Update</button>
+            <input asp-action="update" asp-controller="kindergartens" type="submit" class="btn btn-primary" value="Update" />
         }
 
         else
 
         {
-            <button type="submit" formaction="@Url.Action("Create", "Kindergartens")" class="btn btn-primary">Create</button>
+            <input asp-action="create" asp-controller="kindergartens" type="submit" class="btn btn-primary" value="Create" />
         }
 
-        <a asp-action="Index" class="btn btn-outline-dark">Back</a>
+        <a asp-action="Index" asp-controller="kindergartens" class="btn btn-success">Back</a>
     </form>
 </div>
