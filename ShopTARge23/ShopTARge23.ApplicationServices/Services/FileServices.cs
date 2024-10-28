@@ -1,15 +1,11 @@
-﻿using ShopTARge23.Core.Domain;
-using ShopTARge23.Core.Dto;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
-using ShopTARge23.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
+using ShopTARge23.Core.Domain;
+using ShopTARge23.Core.Dto;
 using ShopTARge23.Core.ServiceInterface;
-using Microsoft.EntityFrameworkCore;
+using ShopTARge23.Data;
+using System.Xml;
+
 
 namespace ShopTARge23.ApplicationServices.Services
 {
@@ -27,6 +23,7 @@ namespace ShopTARge23.ApplicationServices.Services
             _webHost = webHost;
             _context = context;
         }
+
 
         public void FilesToApi(SpaceshipDto dto, Spaceship spaceship)
         {
@@ -51,14 +48,32 @@ namespace ShopTARge23.ApplicationServices.Services
                         {
                             Id = Guid.NewGuid(),
                             ExistingFilePath = uniqueFileName,
-                            SpaceshipId = spaceship.Id,
+                            SpaceshipId = spaceship.Id
                         };
 
                         _context.FileToApis.AddAsync(path);
-                        //_context.SaveChangesAsync();
                     }
                 }
             }
+        }
+
+        public async Task<FileToApi> RemoveImageFromApi(FileToApiDto dto)
+        {
+            var imageId = await _context.FileToApis
+                .FirstOrDefaultAsync(x => x.Id == dto.Id);
+
+            var filePath = _webHost.ContentRootPath + "\\multipleFileUpload\\"
+                + imageId.ExistingFilePath;
+
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+
+            _context.FileToApis.Remove(imageId);
+            await _context.SaveChangesAsync();
+
+            return null;
         }
 
         public async Task<List<FileToApi>> RemoveImagesFromApi(FileToApiDto[] dtos)
@@ -83,56 +98,10 @@ namespace ShopTARge23.ApplicationServices.Services
             return null;
         }
 
-        public async Task<FileToApi> RemoveImageFromApi(FileToApiDto dto)
-        {
-            var imageId = await _context.FileToApis
-                .FirstOrDefaultAsync(x => x.Id == dto.Id);
-
-            var filePath = _webHost.ContentRootPath + "\\multipleFileUpload\\" + imageId.ExistingFilePath;
-
-            if (File.Exists(filePath))
-            {
-                File.Delete(filePath);
-            }
-
-            _context.FileToApis.Remove(imageId);
-            await _context.SaveChangesAsync();
-
-            return null;
-        }
-
-        public void UploadFilesToDatabase(RealEstateDto dto, RealEstate domain)
-        {
-
-            if (dto.Files != null && dto.Files.Count > 0)
-            {
-
-                foreach (var image in dto.Files)
-                {
-                    using (var target = new MemoryStream())
-                    {
-                        FileToDatabase files = new FileToDatabase()
-                        {
-                            Id = Guid.NewGuid(),
-                            ImageTitle = image.FileName,
-                            RealEstateId = domain.Id
-                        };
-
-                        image.CopyTo(target);
-                        files.ImageData = target.ToArray();
-
-                        _context.FileToDatabases.Add(files);
-                    }
-                }
-            }
-        }
-
         public void UploadFilesToDatabase(KindergartenDto dto, Kindergarten domain)
         {
-
             if (dto.Files != null && dto.Files.Count > 0)
             {
-
                 foreach (var image in dto.Files)
                 {
                     using (var target = new MemoryStream())
@@ -153,34 +122,33 @@ namespace ShopTARge23.ApplicationServices.Services
             }
         }
 
-        public async Task<FileToDatabase> RemoveFileFromDatabase(FileToDatabaseDto dto)
+        public async Task<FileToDatabase> RemoveImageFromDatabase(FileToDatabaseDto dto)
         {
-            var imageId = await _context.FileToDatabases
+            var image = await _context.FileToDatabases
                 .Where(x => x.Id == dto.Id)
                 .FirstOrDefaultAsync();
 
-
-            _context.FileToDatabases.Remove(imageId);
+            _context.FileToDatabases.Remove(image);
             await _context.SaveChangesAsync();
 
-
-            return imageId;
+            return image;
         }
 
-        public async Task<FileToDatabase> RemoveFilesFromDatabase(FileToDatabaseDto[] dtos)
+
+        public async Task<FileToDatabase> RemoveImagesFromDatabase(FileToDatabaseDto[] dtos)
         {
             foreach (var dto in dtos)
             {
-                var imageId = await _context.FileToDatabases
-                .Where(x => x.Id == dto.Id)
-                .FirstOrDefaultAsync();
+                var image = await _context.FileToDatabases
+                    .Where(x => x.Id == dto.Id)
+                    .FirstOrDefaultAsync();
 
-
-                _context.FileToDatabases.Remove(imageId);
+                _context.FileToDatabases.Remove(image);
                 await _context.SaveChangesAsync();
             }
 
             return null;
         }
+        //teha meetod, kus kustutatakse mitu pilti koos ankeediga ära
     }
 }
