@@ -4,6 +4,7 @@ using ShopTARge23.ApplicationServices.Services;
 using ShopTARge23.Core.ServiceInterface;
 using ShopTARge23.Data;
 
+
 namespace ShopTARge23
 {
     public class Program
@@ -17,11 +18,11 @@ namespace ShopTARge23
 
             builder.Services.AddScoped<ISpaceshipsServices, SpaceshipsServices>();
             builder.Services.AddScoped<IFileServices, FileServices>();
-            builder.Services.AddScoped<IRealEstateServices, RealEstateServices>();
-            builder.Services.AddScoped<IKindergartensServices, KindergartensServices>();
+            builder.Services.AddScoped<IKindergartenServices, KindergartenServices>();
 
             builder.Services.AddDbContext<ShopTARge23Context>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
             var app = builder.Build();
 
@@ -29,6 +30,7 @@ namespace ShopTARge23
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -46,16 +48,9 @@ namespace ShopTARge23
 
             app.UseAuthorization();
 
-            // Default controller route
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
-
-            // Kindergarten route
-            app.MapControllerRoute(
-                name: "kindergarten",
-                pattern: "Kindergarten/{action=Index}/{id?}",
-                defaults: new { controller = "Kindergarten" });
 
             app.Run();
         }
