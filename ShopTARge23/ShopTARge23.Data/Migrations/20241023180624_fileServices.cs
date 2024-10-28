@@ -5,7 +5,7 @@
 namespace ShopTARge23.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class FileToDatabase : Migration
+    public partial class fileServices : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

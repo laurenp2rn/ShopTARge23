@@ -12,8 +12,8 @@ using ShopTARge23.Data;
 namespace ShopTARge23.Data.Migrations
 {
     [DbContext(typeof(ShopTARge23Context))]
-    [Migration("20241016143917_KindergartenUpdate")]
-    partial class KindergartenUpdate
+    [Migration("20241023180624_fileServices")]
+    partial class fileServices
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,7 +32,11 @@ namespace ShopTARge23.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ExistingFilePath")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("KindergartenId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("SpaceshipId")
                         .HasColumnType("uniqueidentifier");
@@ -49,15 +53,10 @@ namespace ShopTARge23.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<byte[]>("ImageData")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("ImageTitle")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("KindergartenId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("RealEstateId")
                         .HasColumnType("uniqueidentifier");
@@ -99,65 +98,37 @@ namespace ShopTARge23.Data.Migrations
                     b.ToTable("Kindergartens");
                 });
 
-            modelBuilder.Entity("ShopTARge23.Core.Domain.RealEstate", b =>
+            modelBuilder.Entity("ShopTARge23.Core.Domain.Spaceship", b =>
                 {
                     b.Property<Guid?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("BuildingType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("ModifiedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("RoomNumber")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Size")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RealEstates");
-                });
-
-            modelBuilder.Entity("ShopTARge23.Core.Domain.Spaceship", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("BuiltDate")
+                    b.Property<DateTime>("BuiltDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("Crew")
+                    b.Property<int>("Crew")
                         .HasColumnType("int");
 
-                    b.Property<int?>("EnginePower")
+                    b.Property<int>("EnginePower")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SpaceshipModel")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Typename")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

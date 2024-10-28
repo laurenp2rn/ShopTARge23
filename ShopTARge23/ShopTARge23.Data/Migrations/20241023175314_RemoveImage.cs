@@ -6,25 +6,23 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ShopTARge23.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class FileToApi : Migration
+    public partial class RemoveImage : Migration
     {
-        public string ExistingFilePath { get; set; }
-        public Guid Id { get; set; }
-
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "FileToApis",
+                name: "FileToDatabases",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ExistingFilePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SpaceshipId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    ImageTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageData = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    RealEstateId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FileToApis", x => x.Id);
+                    table.PrimaryKey("PK_FileToDatabases", x => x.Id);
                 });
         }
 
@@ -32,7 +30,7 @@ namespace ShopTARge23.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "FileToApis");
+                name: "FileToDatabases");
         }
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ShopTARge23.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Kindergarten : Migration
+    public partial class KindergartenAdd : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

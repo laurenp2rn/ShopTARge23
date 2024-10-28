@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopTARge23.Data;
 
@@ -11,9 +12,11 @@ using ShopTARge23.Data;
 namespace ShopTARge23.Data.Migrations
 {
     [DbContext(typeof(ShopTARge23Context))]
-    partial class ShopTARge23ContextModelSnapshot : ModelSnapshot
+    [Migration("20241005172543_UpdateKindergartenId")]
+    partial class UpdateKindergartenId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,6 +32,7 @@ namespace ShopTARge23.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ExistingFilePath")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("SpaceshipId")
@@ -37,28 +41,6 @@ namespace ShopTARge23.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("FileToApis");
-                });
-
-            modelBuilder.Entity("ShopTARge23.Core.Domain.FileToDatabase", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<byte[]>("ImageData")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<string>("ImageTitle")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("KindergartenId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("FileToDatabases");
                 });
 
             modelBuilder.Entity("ShopTARge23.Core.Domain.Kindergarten", b =>

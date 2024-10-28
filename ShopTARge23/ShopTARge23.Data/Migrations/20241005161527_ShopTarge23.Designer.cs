@@ -12,8 +12,8 @@ using ShopTARge23.Data;
 namespace ShopTARge23.Data.Migrations
 {
     [DbContext(typeof(ShopTARge23Context))]
-    [Migration("20241002122343_Kindergarten")]
-    partial class Kindergarten
+    [Migration("20241005161527_ShopTarge23")]
+    partial class ShopTarge23
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,41 +43,9 @@ namespace ShopTARge23.Data.Migrations
                     b.ToTable("FileToApis");
                 });
 
-            modelBuilder.Entity("ShopTARge23.Core.Domain.Kindergarten", b =>
-                {
-                    b.Property<Guid?>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("ChildrenCount")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("GroupName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("KindergartenName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Teacher")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Kindergartens");
-                });
-
             modelBuilder.Entity("ShopTARge23.Core.Domain.Spaceship", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
