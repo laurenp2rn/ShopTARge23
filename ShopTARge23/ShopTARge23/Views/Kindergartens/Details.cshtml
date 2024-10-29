@@ -1,54 +1,95 @@
 ﻿@model ShopTARge23.Models.Kindergartens.KindergartensDetailsViewModel
 
+<style>
+    body {
+        background-image: url('/images/taust.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
 
-<h1>Details</h1>
+    .overlay {
+        background-color: rgba(255, 255, 255, 0.8); /* Muudetud, et taust oleks õrnalt läbi paistev */
+        padding: 50px;
+        border-radius: 10px;
+        margin: 20px; /* Lisab ruumi ümber overlay */
+    }
 
-<div>
-    <h4>Kindergarten</h4>
-    <hr />
-    <dl class="row">
-        <div class="form-group row">
-            <label asp-for="Id" class="col-sm-2 col-form-label"></label>
-            @Html.DisplayFor(model => model.Id)
+    h1 {
+        text-align: center; /* Joondus keskele */
+        color: black; /* Teksti värv must */
+    }
+
+    h4 {
+        text-align: center; /* Joondus keskele */
+        color: black; /* Teksti värv must */
+    }
+
+    .table {
+        width: 100%;
+        margin-top: 20px; /* Lisatud ruum tabeli ülemise osa jaoks */
+    }
+
+    .btn-danger {
+        background-color: #dc3545; /* Tumepunane nupp */
+        color: white; /* Nupu tekst valge */
+    }
+</style>
+
+<div class="container my-5">
+    <div class="overlay shadow">
+        <h1>Details</h1>
+
+        <h4>Kindergarten</h4>
+        <hr />
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Property</th>
+                    <th scope="col">Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td asp-for="Id">ID</td>
+                    <td>@Html.DisplayFor(model => model.Id)</td>
+                </tr>
+                <tr>
+                    <td asp-for="GroupName">Group Name</td>
+                    <td>@Html.DisplayFor(model => model.GroupName)</td>
+                </tr>
+                <tr>
+                    <td asp-for="ChildrenCount">Children Count</td>
+                    <td>@Html.DisplayFor(model => model.ChildrenCount)</td>
+                </tr>
+                <tr>
+                    <td asp-for="KindergartenName">Kindergarten Name</td>
+                    <td>@Html.DisplayFor(model => model.KindergartenName)</td>
+                </tr>
+                <tr>
+                    <td asp-for="Teacher">Teacher</td>
+                    <td>@Html.DisplayFor(model => model.Teacher)</td>
+                </tr>
+                <tr>
+                    <td asp-for="CreatedAt">Created At</td>
+                    <td>@Html.DisplayFor(model => model.CreatedAt)</td>
+                </tr>
+                <tr>
+                    <td asp-for="UpdatedAt">Updated At</td>
+                    <td>@Html.DisplayFor(model => model.UpdatedAt)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="text-center">
+            @foreach (var images in Model.Image)
+            {
+                <partial name="_Images" model="images" />
+            }
+
+            <a asp-action="Index" asp-controller="kindergartens" class="btn btn-danger">Back</a>
         </div>
-
-        <div class="form-group row">
-            <label asp-for="GroupName" class="col-sm-2 col-form-label"></label>
-            @Html.DisplayFor(model => model.GroupName)
-        </div>
-
-        <div class="form-group row">
-            <label asp-for="ChildrenCount" class="col-sm-2 col-form-label"></label>
-            @Html.DisplayFor(model => model.ChildrenCount)
-        </div>
-
-        <div class="form-group row">
-            <label asp-for="KindergartenName" class="col-sm-2 col-form-label"></label>
-            @Html.DisplayFor(model => model.KindergartenName)
-        </div>
-
-        <div class="form-group row">
-            <label asp-for="Teacher" class="col-sm-2 col-form-label"></label>
-            @Html.DisplayFor(model => model.Teacher)
-        </div>
-
-        <div class="form-group row">
-            <label asp-for="CreatedAt" class="col-sm-2 col-form-label"></label>
-            @Html.DisplayFor(model => model.CreatedAt)
-        </div>
-
-        <div class="form-group row">
-            <label asp-for="UpdatedAt" class="col-sm-2 col-form-label"></label>
-            @Html.DisplayFor(model => model.UpdatedAt)
-        </div>
-
-        @foreach (var images in Model.Image)
-
-        {
-            <partial name="_Images" model="images" />
-        }
-
-    </dl>
-
-    <a asp-action="Index" asp-controller="kindergartens" class="btn btn-danger">Back</a>
+    </div>
 </div>
