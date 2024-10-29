@@ -1,46 +1,115 @@
 ﻿@model IEnumerable<ShopTARge23.Models.Spaceships.SpaceshipsIndexViewModel>
 
 @{
+    ViewData["Title"] = "Spaceships"; // Pealkiri
+
+
+
+
+
+
+
     int rowNumber = 1;
 }
 
-<div>
-    <a asp-action="create" asp-controller="Spaceships" type="submit" class="btn btn-primary">Create</a>
-</div>
+<style>
+    body {
+        background-image: url('/images/taust.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
 
-<div class="h1">
-    Spaceships
-</div>
-<form method="post">
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th scope="col">Nr</th>
-                <th scope="col">Name</th>
-                <th scope="col">Type</th>
-                <th scope="col">Built date</th>
-                <th scope="col">Crew</th>
-                <th scope="col"></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach(var spaceships in Model)
-            {
+    .overlay {
+        background-color: rgba(255, 255, 255, 0.7); /* Muudetud, et taust oleks õrnalt läbi paistev */
+        padding: 50px;
+        border-radius: 10px;
+        margin: 20px; /* Lisab ruumi ümber overlay */
+    }
+
+        .overlay h1 {
+            color: black; /* Määrab h1 teksti värviks musta */
+            margin-bottom: 20px; /* Ruumi all */
+            text-align: center; /* Joondus keskele */
+        }
+
+    .table {
+        background-color: #ffffff; /* Tabeli taust valge */
+        margin-top: 20px; /* Lisatud ruum tabeli ülemise osa jaoks */
+    }
+
+        .table th {
+            background-color: #f8f9fa; /* Tabeli päise heledam taust */
+            text-align: center; /* Joondus keskele */
+        }
+
+        .table td {
+            text-align: center; /* Joondus keskele */
+        }
+
+    .table-hover tbody tr:hover {
+        background-color: #e9ecef; /* Ridade hover efekt */
+    }
+
+    .btn-custom {
+        background-color: #28a745; /* Roheline nupp */
+        color: white; /* Nupu tekst valge */
+    }
+
+    .btn-danger-custom {
+        background-color: #dc3545; /* Tumepunane nupp */
+        color: white; /* Nupu tekst valge */
+    }
+</style>
+
+<div class="container my-5">
+    <div class="text-center overlay shadow">
+        <h1 class="display-4">@ViewData["Title"]</h1>
+        <p>Manage your spaceships easily. Use the options below to create, update, or delete spaceships from our database.</p>
+        <p>Below is a list of all available spaceships in the system. You can view details or make changes as needed.</p>
+
+        <div class="d-flex justify-content-center mt-4">
+            <a asp-action="Create" asp-controller="Spaceships" class="btn btn-custom">Create</a> <!-- Roheline nupp -->
+        </div>
+    </div>
+
+    <form method="post">
+        <table class="table table-hover">
+            <thead>
                 <tr>
-                    <td>@rowNumber</td>
-                    <td>@spaceships.Name</td>
-                    <td>@spaceships.Typename</td>
-                    <td>@spaceships.BuiltDate</td>
-                    <td>@spaceships.Crew</td>
-                    <td>
-                        <a asp-action="details" asp-controller="spaceships" asp-route-id="@spaceships.Id" class="btn btn-info">Details</a>
-                        <a asp-action="update" asp-controller="spaceships" asp-route-id="@spaceships.Id" class="btn btn-primary">Update</a>
-                        <a asp-action="delete" asp-controller="spaceships" asp-route-id="@spaceships.Id" class="btn btn-outline-danger">Delete</a>
-                    </td>
+                    <th scope="col">Nr</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Built Date</th>
+                    <th scope="col">Crew</th>
+                    <th scope="col"></th>
                 </tr>
+            </thead>
+            <tbody>
+                @foreach (var spaceships in Model)
 
-                rowNumber += 1;
-            }
-        </tbody>
-    </table>
-</form>
+
+
+                {
+                    <tr>
+                        <td>@rowNumber</td>
+                        <td>@spaceships.Name</td>
+                        <td>@spaceships.Typename</td>
+                        <td>@spaceships.BuiltDate.ToString("yyyy-MM-dd")</td>
+                        <td>@spaceships.Crew</td>
+                        <td>
+                            <a asp-action="Details" asp-controller="Spaceships" asp-route-id="@spaceships.Id" class="btn btn-custom">Details</a> <!-- Roheline nupp -->
+                            <a asp-action="Update" asp-controller="Spaceships" asp-route-id="@spaceships.Id" class="btn btn-custom">Update</a> <!-- Roheline nupp -->
+                            <a asp-action="Delete" asp-controller="Spaceships" asp-route-id="@spaceships.Id" class="btn btn-danger-custom">Delete</a> <!-- Tumepunane nupp -->
+                        </td>
+                    </tr>
+                    rowNumber += 1;
+
+
+
+                }
+            </tbody>
+        </table>
+    </form>
+</div>
