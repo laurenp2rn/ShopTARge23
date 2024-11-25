@@ -1,5 +1,16 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model ShopTARge23.Models.OpenWeathers.OpenWeatherViewModel
+
+<h2>@Model.CityName</h2>
+
+<div>
+    <p><strong>Temperature:</strong> @Model.Temperature °C</p>
+    <p><strong>Feels Like:</strong> @Model.FeelsLike °C</p>
+    <p><strong>Humidity:</strong> @Model.Humidity %</p>
+    <p><strong>Pressure:</strong> @Model.Pressure hPa</p>
+    <p><strong>Wind Speed:</strong> @Model.WindSpeed km/h</p>
+    <p><strong>Weather Condition:</strong> @Model.WeatherCondition</p>
+</div>
+
+<form method="post" action="/OpenWeathers/Index">
+    <button type="submit" class="btn btn-success">Return</button>
+</form>

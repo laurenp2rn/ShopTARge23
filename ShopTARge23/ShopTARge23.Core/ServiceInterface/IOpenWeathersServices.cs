@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using ShopTARge23.Core.Dto.WeatherDtos;
 using System.Threading.Tasks;
 
 namespace ShopTARge23.Core.ServiceInterface
 {
-    internal class IOpenWeathersServices
+    public interface IOpenWeathersServices
     {
+        Task<WeatherDataDto> OpenWeatherResult(WeatherDataDto dto);
     }
 }
