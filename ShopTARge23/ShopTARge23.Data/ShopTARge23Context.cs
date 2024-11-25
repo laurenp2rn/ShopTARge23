@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShopTARge23.Core.Domain;
-using ShopTARge23.Data.Migrations;
 using System.Xml;
 //using Microsoft.EntityFrameworkCore.Relational;
 //using Microsoft.Data.SqlClient;

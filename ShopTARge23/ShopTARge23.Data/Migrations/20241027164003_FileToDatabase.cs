@@ -7,8 +7,6 @@ namespace ShopTARge23.Data.Migrations
     /// <inheritdoc />
     public partial class FileToDatabase : Migration
     {
-        public Guid Id { get; set; }
-
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {

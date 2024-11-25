@@ -8,9 +8,6 @@ namespace ShopTARge23.Data.Migrations
     /// <inheritdoc />
     public partial class FileToApi : Migration
     {
-        public string ExistingFilePath { get; set; }
-        public Guid Id { get; set; }
-
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {

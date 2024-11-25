@@ -45,14 +45,20 @@
     <div class="overlay shadow">
         @if (Model.Id.HasValue)
 
+
+
         {
-            <h1>Update</h1>
+                <h1>Update</h1>
         }
+
+
 
         else
 
+
+
         {
-            <h1>Create</h1>
+                <h1>Create</h1>
         }
 
         <form method="post" enctype="multipart/form-data">
@@ -100,9 +106,11 @@
             <div>
                 @foreach (var images in Model.Image)
 
+
+
                 {
-                    <partial name="_Images" model="images" />
-                    <input asp-action="removeImage" asp-controller="kindergartens" asp-route-imageId="@images.ImageId" type="submit" class="btn btn-danger-custom" value="Remove Image" />
+                        <partial name="_Images" model="images" />
+                        <input asp-action="removeImage" asp-controller="kindergartens" asp-route-imageId="@images.ImageId" type="submit" class="btn btn-danger-custom" value="Remove Image" />
                 }
             </div>
 
@@ -110,11 +118,11 @@
 
             @if (Model.Id.HasValue)
             {
-                <input asp-action="update" asp-controller="kindergartens" type="submit" class="btn btn-primary-custom" value="Update" />
+                    <input asp-action="update" asp-controller="kindergartens" type="submit" class="btn btn-primary-custom" value="Update" />
             }
             else
             {
-                <input asp-action="create" asp-controller="kindergartens" type="submit" class="btn btn-primary-custom" value="Create" />
+                    <input asp-action="create" asp-controller="kindergartens" type="submit" class="btn btn-primary-custom" value="Create" />
             }
 
             <a asp-action="Index" asp-controller="kindergartens" class="btn btn-custom">Back</a>
