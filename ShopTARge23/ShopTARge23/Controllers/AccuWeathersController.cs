@@ -23,7 +23,7 @@ namespace ShopTARge23.Controllers
         }
 
         [HttpPost]
-        public IActionResult SearchCity(AccuWeatherSearchViewModel model)
+        public IActionResult SearchCity(OpenWeatherSearchViewModel model)
         {
             if (ModelState.IsValid)
             {
