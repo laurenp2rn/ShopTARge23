@@ -4,7 +4,6 @@ using ShopTARge23.Core.Domain;
 using ShopTARge23.Core.Dto;
 using ShopTARge23.Core.ServiceInterface;
 using ShopTARge23.Data;
-using System.Xml;
 
 
 namespace ShopTARge23.ApplicationServices.Services
@@ -78,7 +77,7 @@ namespace ShopTARge23.ApplicationServices.Services
 
         public async Task<List<FileToApi>> RemoveImagesFromApi(FileToApiDto[] dtos)
         {
-            foreach (var dto in dtos)
+            foreach(var dto in dtos)
             {
                 var imageId = await _context.FileToApis
                     .FirstOrDefaultAsync(x => x.ExistingFilePath == dto.ExistingFilePath);
@@ -98,7 +97,7 @@ namespace ShopTARge23.ApplicationServices.Services
             return null;
         }
 
-        public void UploadFilesToDatabase(KindergartenDto dto, Kindergarten domain)
+        public void UploadFilesToDatabase(RealEstateDto dto, RealEstate domain)
         {
             if (dto.Files != null && dto.Files.Count > 0)
             {
@@ -110,7 +109,7 @@ namespace ShopTARge23.ApplicationServices.Services
                         {
                             Id = Guid.NewGuid(),
                             ImageTitle = image.FileName,
-                            KindergartenId = domain.Id
+                            RealEstateId = domain.Id
                         };
 
                         image.CopyTo(target);
@@ -137,7 +136,7 @@ namespace ShopTARge23.ApplicationServices.Services
 
         public async Task<FileToDatabase> RemoveImagesFromDatabase(FileToDatabaseDto[] dtos)
         {
-            foreach (var dto in dtos)
+            foreach(var dto in dtos)
             {
                 var image = await _context.FileToDatabases
                     .Where(x => x.Id == dto.Id)
