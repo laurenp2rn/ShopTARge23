@@ -23,11 +23,11 @@ namespace ShopTARge23.Controllers
         }
 
         [HttpPost]
-        public IActionResult SearchCity(OpenWeatherSearchViewModel model)
+        public IActionResult SearchCity(AccuWeatherSearchViewModel model)
         {
             if (ModelState.IsValid)
             {
-                return RedirectToAction("City", "AccuWeathers", new {city = model.CityName});
+                return RedirectToAction("City", "AccuWeathers", new { city = model.CityName });
             }
 
             return View(model);

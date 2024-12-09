@@ -1,6 +1,6 @@
-﻿namespace ShopTARge23.Models.AccuWeathers
+﻿namespace ShopTARge23.Models.OpenWeathers
 {
-    public class AccuWeatherSearchViewModel
+    public class OpenWeatherSearchViewModel
     {
         public string CityName { get; set; }
     }
